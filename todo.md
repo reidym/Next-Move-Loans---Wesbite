@@ -1,0 +1,63 @@
+# Next Move Loans refinement checklist
+
+- [x] Audit `NextMoveLoans-Website.html` against the current homepage and identify the strongest simplification patterns.
+- [x] Extract the revised content and functional requirements from `pasted_content_2.txt` into an implementation brief.
+- [x] Analyse the marketing avatars document and map each priority avatar to solutions, loan types, locations, and article topics.
+- [x] Analyse the three supplied campaign emails for tone, structure, hook patterns, and compliant content opportunities.
+- [x] Confirm the approved award names, years, categories, and supplied badge variants; do not infer wins from finalist badges.
+- [x] Diagnose and remove the mobile overflow/cropping shown in the supplied screenshot.
+- [x] Remove the decorative left-edge dots, grid lines, and non-quotation heading quote marks across the site.
+- [x] Redesign the homepage to simplify the story and surface Purchase, Refinance, Investment, Business, Agri, and Asset pathways earlier.
+- [x] Add the supplied phone numbers, email address, Leongatha address, and approved Calendly destinations.
+- [x] Add an award-proof system using the supplied finalist badges with accurate attribution and restrained presentation.
+- [x] Replace the former case-study priority with a dedicated solution architecture.
+- [x] Build solution pages for first home, first investment, renovation, debt-consolidation refinance, next home, business growth, business premises, equity release, bridging, and construction.
+- [x] Expand loan-type content and make types of finance easier to find from navigation and relevant pages.
+- [x] Remove South Gippsland/council-first location language and focus location content on actual towns, suburbs, and user search intent.
+- [x] Strengthen Leongatha, Warragul, Berwick, and future-location content without creating thin or cloned pages.
+- [x] Rewrite Martin Reidy’s founder story around Berwick, country roots, better advice, opportunity, and the enemy of uncertainty.
+- [x] Upgrade the static project to a secure full-stack CMS architecture.
+- [x] Implement admin-managed articles with draft, scheduled, published, and unpublished states plus editable SEO controls.
+- [x] Implement reusable admin-managed broker profiles, approved reviews, and practical content blocks.
+- [x] Implement a light lead form and tested transactional-email adapter for `unlock@nextmoveloans.com.au` without collecting sensitive financial documents; keep delivery safely dormant until approved credentials are supplied.
+- [x] Integrate Calendly through lightweight links or on-demand loading rather than unconditional third-party scripts.
+- [x] Implement a compliant public-review display or a clearly documented review-feed connection path without Business Profile owner OAuth.
+- [x] Centralise GA4, GTM, Search Console, Meta Pixel, future call tracking, and conversion-tag configuration.
+- [x] Add automatic sitemap, schema, index-control, related-content, and topic-hub updates for publish-ready CMS content.
+- [x] Reduce initial HTML, CSS, JavaScript, font weights, image payloads, and third-party execution toward the supplied performance budget.
+- [x] Document staging, rollback, GitHub ownership steps, portability, environment variables, backup/export, and disaster recovery.
+- [x] Produce a PASS / FIX / NOT YET SUPPLIED pre-launch audit covering every requested technical and content item.
+- [x] Capture desktop and mobile screenshots, run TypeScript/build checks, save a new checkpoint, and deliver the refined review version.
+- [x] Keep CMS content in explicit, documented, vendor-neutral records rather than embedding business content inside platform-specific code.
+- [x] Provide an authenticated structured-content export covering articles, brokers, reviews, reusable blocks, SEO fields, relationships, publication states, and timestamps.
+- [x] Provide a media export manifest containing original filenames, public URLs, storage keys where available, alternative text, captions, and related content records.
+- [x] Prepare repository documentation and a private-GitHub connection handoff while keeping unfinished work in preview until the user connects the repository and approves publication.
+- [x] Add structured provider-specific conversion mappings and wire Google Ads and Meta labels to the existing conversion-event bridge.
+- [x] Use central call-tracking configuration for safe primary-number replacement, with an explicit no-op until a replacement number is approved.
+- [x] Adapt the Learning Centre voice and taxonomy from the supplied campaign emails and marketing avatars, publish the safe evergreen perspectives through the CMS, and hold time-sensitive Budget claims as verification-gated drafts.
+- [x] Implement explicit CMS-driven topic hubs so publish-ready articles automatically update stable audience and decision-hub routes.
+- [x] Add tests for sitemap route composition, draft exclusion, scheduled-publication visibility, and CMS-driven topic-hub relationships.
+- [x] Implement a deployment-gated daily CMS backup handler using the shared portable export, persistent storage snapshots, task-UID authentication, and a non-destructive minimum 30-day retention policy.
+- [x] Add and test production security headers covering content type, framing, referrer, permissions, transport security, and a provider-aware content security policy.
+- [x] Add an administrator-controlled lead data export and deletion path for privacy requests while keeping customer enquiries out of the portable public-content export.
+- [x] Add a hidden honeypot and validate the existing lead throttling and minimum-completion protections across both public form transports.
+- [x] Create and cryptographically verify a real pre-launch CMS backup snapshot without activating the daily production schedule.
+- [x] Run an automated internal-link, metadata, heading, canonical, robots, JSON-LD, form, asset and console audit across representative production routes.
+- [x] Run Lighthouse against the isolated production build and report measured performance, accessibility, best-practice and SEO scores without overstating unmeasured field performance.
+- [x] Diagnose the reported managed-preview loading failure using current server, browser-console, network, and runtime evidence.
+- [x] Restore the preview with the smallest safe code or service fix while preserving the tested production build.
+- [x] Verify the homepage, representative public routes, enquiry form, and secure CMS entry render successfully in the managed preview.
+- [x] Re-run TypeScript/tests/build as needed, save a corrected checkpoint, and deliver the restored preview version.
+- [x] Test the current managed preview URL from an external browser session and identify why the user still cannot open it despite healthy internal screenshots.
+- [x] Correct any host, routing, session, or preview-service incompatibility without weakening production security or changing approved site content.
+- [x] Provide and externally verify a temporary direct review URL if the management preview card remains inaccessible.
+- [ ] Save and deliver a recovery checkpoint together with the verified working review path.
+- [x] Review persistent-hosting requirements and the connected cloud environment before creating an independent review endpoint.
+- [x] Create a minimally exposed temporary cloud review service outside the blocked `manus.computer` domain without changing production data.
+- [x] Verify the independent endpoint from an external browser, record the system/firewall change, and provide cleanup instructions.
+- [ ] Deliver the independently hosted review link to the user and confirm accessibility.
+- [x] Verify GitHub authentication and the state, ownership, and privacy of `reidym/Next-Move-Loans---Wesbite`.
+- [x] Audit tracked and untracked project files for secrets, lead/customer data, database contents, build output, QA artefacts, and temporary review infrastructure before any push.
+- [ ] Prepare and push the complete source, CMS/backend code, migrations, tests, seeds, and documentation to the private repository.
+- [ ] Verify the remote default branch, repository privacy, latest commit, and source integrity after the push.
+- [ ] Deliver the GitHub repository link and ownership handoff to the user.
