@@ -15,12 +15,30 @@ function CalendlyAssets() {
       link.href = "https://assets.calendly.com/assets/external/widget.css";
       document.head.appendChild(link);
     }
-    const scriptId = "calendly-widget-js";
-    if (!document.getElementById(scriptId)) {
+
+    const initBadge = () => {
+      const calendly = (window as any).Calendly;
+      if (calendly?.initBadgeWidget && !document.querySelector(".calendly-badge-widget")) {
+        calendly.initBadgeWidget({
+          url: "https://calendly.com/martin-reidy/discovery-call",
+          text: "Schedule time with me",
+          color: "#0069ff",
+          textColor: "#ffffff",
+          branding: false,
+        });
+      }
+    };
+
+    const existing = document.getElementById("calendly-widget-js") as HTMLScriptElement | null;
+    if (existing) {
+      if ((window as any).Calendly) initBadge();
+      else existing.addEventListener("load", initBadge, { once: true });
+    } else {
       const script = document.createElement("script");
-      script.id = scriptId;
+      script.id = "calendly-widget-js";
       script.src = "https://assets.calendly.com/assets/external/widget.js";
       script.async = true;
+      script.addEventListener("load", initBadge, { once: true });
       document.body.appendChild(script);
     }
   }, []);
