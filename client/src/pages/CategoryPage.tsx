@@ -1,16 +1,10 @@
-/**
- * Pathfinder Editorial finance hub: one strong category proposition, a visible service spine,
- * and enough depth for search without turning the page into an undifferentiated card wall.
- */
-
 import { Link, useParams } from "wouter";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { PageHero } from "@/components/PagePrimitives";
+import { ArrowRight, ArrowUpRight, Phone } from "lucide-react";
 import { Seo, breadcrumbSchema } from "@/components/Seo";
-import { ArrowLink, FinalCta, SectionIntro } from "@/components/Shared";
+import { Eyebrow } from "@/components/Shared";
 import { SiteLayout } from "@/components/SiteChrome";
 import NotFound from "@/pages/NotFound";
-import { getCategory, services } from "@/lib/siteData";
+import { contactDetails, getCategory, services } from "@/lib/siteData";
 
 export default function CategoryPage() {
   const params = useParams<{ category: string }>();
@@ -28,58 +22,53 @@ export default function CategoryPage() {
         title={`${category.title} Finance | Next Move Loans`}
       />
       <main id="main-content">
-        <PageHero
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Finance", href: "/#finance" }, { label: category.title }]}
-          challenge={category.challenge}
-          eyebrow={category.eyebrow}
-          image={category.image}
-          intro={<p>{category.description}</p>}
-          title={category.title}
-        >
-          <Link className="button button-coral" href="/plan-your-next-move">
-            Plan Your Next Move<ArrowRight aria-hidden="true" className="size-4" />
-          </Link>
-        </PageHero>
+        <section className="bg-[#F7F5F1] py-9 lg:py-12">
+          <div className="container grid gap-7 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <Eyebrow>{category.eyebrow}</Eyebrow>
+              <h1 className="mt-3 text-[clamp(2.3rem,4.2vw,4.2rem)] font-black leading-[1] tracking-[-0.045em] text-[#16203A]">{category.title}</h1>
+              <p className="mt-4 max-w-3xl text-lg leading-8 text-[#4C5566]">{category.description}</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link className="button button-coral" href="/contact-us">Contact Us <ArrowRight className="size-4" /></Link>
+              <a className="button button-outline-dark" href={contactDetails.landlineHref}><Phone className="size-4" /> {contactDetails.landlineDisplay}</a>
+            </div>
+          </div>
+        </section>
 
-        <section className="section-space bg-white">
+        <section className="py-9 lg:py-12">
           <div className="container">
-            <SectionIntro
-              body={<p>Choose the situation closest to the move in front of you. The first conversation can still begin before you know exactly which service fits.</p>}
-              eyebrow="PATHWAYS, NOT PRODUCT SHELVES"
-              index="01"
-              title={<>Where does the <em>current move</em> begin?</>}
-            />
-            <div className="service-list-spine">
-              {categoryServices.map((service, index) => (
-                <Link className="service-list-row group" href={`/services/${service.slug}`} key={service.slug}>
-                  <span className="service-list-number">{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h2>{service.title}</h2>
-                    <p>{service.short}</p>
-                  </div>
-                  <span className="service-list-action">
-                    Explore<ArrowUpRight aria-hidden="true" />
-                  </span>
+            <div className="flex flex-wrap items-end justify-between gap-5">
+              <div>
+                <Eyebrow>WHAT ARE YOU TRYING TO SOLVE?</Eyebrow>
+                <h2 className="mt-2 text-[clamp(1.8rem,2.8vw,2.8rem)] font-black tracking-[-0.035em] text-[#16203A]">Go straight to the question that sounds like yours.</h2>
+              </div>
+              <Link className="button button-coral button-small" href="/contact-us">Ask Us</Link>
+            </div>
+
+            <div className="mt-6 grid gap-3 md:grid-cols-2">
+              {categoryServices.map((service) => (
+                <Link className="group rounded-[1.1rem] border border-[#16203A]/10 bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-md" href={`/services/${service.slug}`} key={service.slug}>
+                  <p className="text-sm font-black uppercase tracking-[0.12em] text-[#9A6F00]">{service.title}</p>
+                  <h3 className="mt-2 text-xl font-black leading-tight text-[#16203A]">{service.challenge}</h3>
+                  <p className="mt-3 leading-7 text-[#4C5566]">{service.short}</p>
+                  <span className="mt-4 inline-flex items-center gap-2 font-black text-[#16203A]">See options <ArrowUpRight className="size-4 text-[#EC7354]" /></span>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="category-question-band">
-          <div className="container grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <section className="bg-[#16203A] py-8 text-white lg:py-10">
+          <div className="container flex flex-wrap items-center justify-between gap-5">
             <div>
-              <span>THE BETTER STARTING POINT</span>
-              <h2>Not sure which service fits? Good. Start with the decision.</h2>
-              <p>Tell us what you are trying to build, what may be standing in the way and when the move needs to happen.</p>
+              <p className="text-sm font-black uppercase tracking-[0.14em] text-[#EC7354]">NOT SURE WHERE YOU FIT?</p>
+              <h2 className="mt-2 text-2xl font-black">You do not need the product name. Tell us the outcome.</h2>
             </div>
-            <ArrowLink href="/plan-your-next-move" light>Plan Your Next Move</ArrowLink>
+            <Link className="button button-coral" href="/contact-us">Start a Conversation</Link>
           </div>
         </section>
-
-        <FinalCta />
       </main>
     </SiteLayout>
   );
 }
-
