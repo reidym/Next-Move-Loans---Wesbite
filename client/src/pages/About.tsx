@@ -1,54 +1,23 @@
-/** Company-first About page. */
 import { Link } from "wouter";
-import { ArrowRight, Eye, Gauge, Lightbulb, Sparkles, Telescope } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Seo, breadcrumbSchema } from "@/components/Seo";
-import { Eyebrow, FinalCta } from "@/components/Shared";
+import { Eyebrow } from "@/components/Shared";
 import { SiteLayout } from "@/components/SiteChrome";
-import { ReviewProof } from "@/components/ReviewProof";
-import { assets } from "@/lib/siteData";
-
-const principles = [
-  [Lightbulb, "Start With Possibility", "Begin with the person, the ambition and what they are trying to build."],
-  [Eye, "Challenge the Obvious", "Ask better questions and test the path instead of defaulting to the obvious answer."],
-  [Gauge, "Make It Easy", "Simplify the complexity and make the next decision easier to understand."],
-  [Sparkles, "Build Momentum", "Use today’s approval to support what may come next."],
-  [Telescope, "Think Longer", "Build relationships measured in years and outcomes—not transactions."],
-] as const;
+import { contactDetails } from "@/lib/siteData";
 
 export default function About() {
   return <SiteLayout>
-    <Seo description="Why Next Move Loans exists: a finance business built around long-term relationships, better questions and helping people build what comes next." image={assets.hero} jsonLd={breadcrumbSchema([{name:"Home",path:"/"},{name:"About",path:"/about"}])} path="/about" title="About Next Move Loans | Why We Exist" />
+    <Seo description="Everyone's building something. Next Move Loans exists to create clarity, build strategy and help people move forward with confidence." jsonLd={breadcrumbSchema([{name:"Home",path:"/"},{name:"Our Why",path:"/about"}])} path="/about" title="Our Why | Next Move Loans" />
     <main id="main-content">
-      <section className="bg-[#16203A] py-12 text-white lg:py-16">
-        <div className="container max-w-5xl">
-          <Eyebrow light>WHY NEXT MOVE LOANS EXISTS</Eyebrow>
-          <h1 className="mt-4 text-[clamp(2.5rem,5vw,5rem)] font-black leading-[0.98] tracking-[-0.05em] text-white">We are not building another finance business.<span className="mt-2 block text-[#EC7354]">We are building a business that helps people build what’s next.</span></h1>
-          <div className="mt-7"><Link className="button button-coral" href="/contact-us">Contact Us <ArrowRight className="size-4" /></Link></div>
-        </div>
-      </section>
+      <section className="bg-[#16203A] py-12 text-white lg:py-14"><div className="container max-w-5xl"><Eyebrow light>OUR WHY</Eyebrow><h1 className="mt-3 text-[clamp(2.4rem,4.7vw,4.7rem)] font-black leading-[0.98] tracking-[-0.05em] text-white">Everyone's building something.<span className="block text-[#EC7354]">We unlock the path.</span></h1></div></section>
 
-      <section className="bg-white py-12 lg:py-16">
-        <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-          <div><Eyebrow>THE IDEA</Eyebrow><h2 className="mt-3 text-[clamp(2rem,3.5vw,3.4rem)] font-black leading-[1.04] tracking-[-0.04em] text-[#16203A]">The loan is usually only the immediate need.</h2></div>
-          <div className="space-y-5 text-lg leading-8 text-[#4C5566]">
-            <p>Next Move Loans was founded by mortgage broker Marty Reidy after seeing too many people treated as a transaction rather than a long-term relationship.</p>
-            <p>A loan might be the immediate need. But behind it is usually something much bigger:</p>
-            <div className="grid gap-2 font-semibold text-[#16203A]"><p>A family needing more space.</p><p>A first buyer wanting a start.</p><p>An investor building financial freedom.</p><p>A business owner turning hard work into personal wealth.</p><p>A family creating a different lifestyle.</p></div>
-            <p>That is why we begin with the person, the ambition and the Game Plan—not the product.</p>
-            <p>Today, we are building a team of brokers who believe in asking better questions, challenging the obvious and helping clients make confident decisions for the next ten years—not just the next transaction.</p>
-          </div>
-        </div>
-      </section>
+      <section className="bg-white py-11 lg:py-14"><div className="container max-w-4xl"><div className="space-y-5 text-lg leading-8 text-[#4C5566]"><p className="font-black text-[#16203A]">Everyone's building something.</p><div className="space-y-1 text-2xl font-black text-[#16203A]"><p>A home.</p><p>A family.</p><p>A business.</p><p>Wealth.</p><p>A better life.</p></div><p>Too often, people know where they want to go but aren't sure how to get there.</p><p>That's where we come in.</p><p className="text-2xl font-black text-[#EC7354]">We unlock the path.</p><p>We create clarity, build the strategy and surround people with the right support so they can move forward with confidence.</p><p className="font-black text-[#16203A]">Because we're not here to sell finance.<br/>We're here to help people build what's next.</p></div></div></section>
 
-      <section className="bg-[#F7F5F1] py-12 lg:py-16">
-        <div className="container">
-          <div className="max-w-3xl"><Eyebrow>HOW WE WANT TO WORK</Eyebrow><h2 className="mt-3 text-[clamp(2rem,3.4vw,3.3rem)] font-black leading-[1.04] tracking-[-0.04em] text-[#16203A]">A better finance relationship starts with better questions.</h2></div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-5">{principles.map(([Icon,title,body]) => {const I=Icon;return <article className="rounded-[1.25rem] border border-[#16203A]/10 bg-white p-5" key={title}><I className="size-5 text-[#EC7354]"/><h3 className="mt-4 text-lg font-black text-[#16203A]">{title}</h3><p className="mt-2 text-sm leading-6 text-[#4C5566]">{body}</p></article>})}</div>
-        </div>
-      </section>
+      <section className="bg-[#F7F5F1] py-11 lg:py-14"><div className="container max-w-4xl"><Eyebrow>OUR ENEMY = UNCERTAINTY</Eyebrow><h2 className="mt-3 text-[clamp(1.9rem,3vw,3rem)] font-black tracking-[-0.04em] text-[#16203A]">The uncertainty that stops people taking the next step.</h2><ul className="mt-6 grid gap-3 text-lg text-[#4C5566] md:grid-cols-2"><li>• Not knowing where to start.</li><li>• Not knowing what's possible.</li><li>• Not knowing who to trust.</li><li>• Trying to make life's biggest decisions alone.</li></ul><div className="mt-8 space-y-1 text-2xl font-black text-[#16203A]"><p>We believe people deserve clarity.</p><p>A strategy.</p><p>The right support.</p><p>And the confidence to move forward.</p><p className="pt-3 text-[#EC7354]">That's why we exist.</p></div></div></section>
 
-      <ReviewProof compact placement="about" />
-      <FinalCta title="What are you building next?" body="Start with a conversation. We will help you work out the useful next step." />
+      <section className="bg-white py-9"><div className="container flex flex-wrap items-center justify-between gap-5"><div><p className="text-xl font-black text-[#16203A]">Want to see how we turn that into action?</p><p className="mt-1 text-[#4C5566]">The Approval Method™ is the four-step process behind every client relationship.</p></div><div className="flex flex-wrap gap-3"><Link className="button button-outline-dark" href="/approval-method">How We Work</Link><Link className="button button-coral" href="/contact-us">Contact Us <ArrowRight className="size-4"/></Link></div></div></section>
+
+      <section className="bg-[#16203A] py-8 text-white"><div className="container flex flex-wrap items-center justify-between gap-4"><p className="font-black">Prefer to talk? <a className="underline decoration-[#EC7354] underline-offset-4" href={contactDetails.landlineHref}>{contactDetails.landlineDisplay}</a></p><Link className="button button-coral button-small" href="/book-a-call">Book a Call</Link></div></section>
     </main>
   </SiteLayout>;
 }
