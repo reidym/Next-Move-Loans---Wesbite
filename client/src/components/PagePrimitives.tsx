@@ -1,76 +1,9 @@
-/**
- * Refined public-page primitives: clear breadcrumbs, strong titles, restrained imagery and
- * a plain contextual question panel that supports the content without decorative route marks.
- */
-
+/** Refined public-page primitives with graceful image failure. */
 import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { ChevronRight } from "lucide-react";
 import { Eyebrow } from "@/components/Shared";
 
-export function Breadcrumbs({ items, light = false }: { items: Array<{ label: string; href?: string }>; light?: boolean }) {
-  return (
-    <nav aria-label="Breadcrumb" className={`breadcrumbs ${light ? "text-white/58" : "text-[#4C5566]"}`}>
-      <ol className="flex flex-wrap items-center gap-1.5">
-        {items.map((item, index) => (
-          <li className="flex items-center gap-1.5" key={`${item.label}-${index}`}>
-            {index > 0 ? <ChevronRight aria-hidden="true" className="size-3.5 opacity-55" /> : null}
-            {item.href ? <Link className="transition-colors hover:text-[#EC7354]" href={item.href}>{item.label}</Link> : <span aria-current="page">{item.label}</span>}
-          </li>
-        ))}
-      </ol>
-    </nav>
-  );
-}
+export function Breadcrumbs({items,light=false}:{items:Array<{label:string;href?:string}>;light?:boolean}){return <nav aria-label="Breadcrumb" className={`breadcrumbs ${light?"text-white/58":"text-[#4C5566]"}`}><ol className="flex flex-wrap items-center gap-1.5">{items.map((item,index)=><li className="flex items-center gap-1.5" key={`${item.label}-${index}`}>{index>0?<ChevronRight className="size-3.5 opacity-55"/>:null}{item.href?<Link className="transition-colors hover:text-[#EC7354]" href={item.href}>{item.label}</Link>:<span aria-current="page">{item.label}</span>}</li>)}</ol></nav>}
 
-export function PageHero({
-  eyebrow,
-  title,
-  intro,
-  challenge,
-  image,
-  breadcrumbs,
-  dark = false,
-  children,
-}: {
-  eyebrow: string;
-  title: ReactNode;
-  intro: ReactNode;
-  challenge?: string;
-  image?: string;
-  breadcrumbs: Array<{ label: string; href?: string }>;
-  dark?: boolean;
-  children?: ReactNode;
-}) {
-  return (
-    <section className={`page-hero ${dark ? "page-hero-dark" : "page-hero-light"}`}>
-      <div className="container relative py-12 lg:py-20">
-        <Breadcrumbs items={breadcrumbs} light={dark} />
-        <div className={`mt-10 grid gap-10 ${image ? "lg:grid-cols-[0.92fr_1.08fr] lg:items-center" : "lg:grid-cols-[1.1fr_0.9fr] lg:items-end"}`}>
-          <div>
-            <Eyebrow light={dark}>{eyebrow}</Eyebrow>
-            <h1 className="page-hero-title">{title}</h1>
-            <div className={`page-hero-intro ${dark ? "text-white/72" : "text-[#4C5566]"}`}>{intro}</div>
-            {children ? <div className="mt-8">{children}</div> : null}
-          </div>
-          {image ? (
-            <div className="page-hero-image-wrap">
-              <img alt="" className="page-hero-image" fetchPriority="high" src={image} />
-              {challenge ? (
-                <div className="page-hero-challenge">
-                  <span>THE QUESTION BEHIND THE LOAN</span>
-                  <p>{challenge}</p>
-                </div>
-              ) : null}
-            </div>
-          ) : challenge ? (
-            <aside className="page-hero-context" aria-label="Decision context">
-              <span>THE QUESTION BEHIND THE LOAN</span>
-              <p>{challenge}</p>
-            </aside>
-          ) : null}
-        </div>
-      </div>
-    </section>
-  );
-}
+export function PageHero({eyebrow,title,intro,challenge,image,breadcrumbs,dark=false,children}:{eyebrow:string;title:ReactNode;intro:ReactNode;challenge?:string;image?:string;breadcrumbs:Array<{label:string;href?:string}>;dark?:boolean;children?:ReactNode}){return <section className={`page-hero ${dark?"page-hero-dark":"page-hero-light"}`}><div className="container relative py-10 lg:py-14"><Breadcrumbs items={breadcrumbs} light={dark}/><div className={`mt-7 grid gap-8 ${image?"lg:grid-cols-[0.92fr_1.08fr] lg:items-center":"lg:grid-cols-[1.1fr_0.9fr] lg:items-end"}`}><div><Eyebrow light={dark}>{eyebrow}</Eyebrow><h1 className="page-hero-title">{title}</h1><div className={`page-hero-intro ${dark?"text-white/72":"text-[#4C5566]"}`}>{intro}</div>{children?<div className="mt-6">{children}</div>:null}</div>{image?<div className="page-hero-image-wrap"><img alt="" className="page-hero-image" fetchPriority="high" onError={(event)=>{event.currentTarget.style.display="none";}} src={image}/>{challenge?<div className="page-hero-challenge"><span>THE QUESTION BEHIND THE LOAN</span><p>{challenge}</p></div>:null}</div>:challenge?<aside className="page-hero-context" aria-label="Decision context"><span>THE QUESTION BEHIND THE LOAN</span><p>{challenge}</p></aside>:null}</div></div></section>}
