@@ -1,123 +1,54 @@
-/**
- * Pathfinder Editorial brand story: purpose before credentials, uncertainty as the enemy,
- * and an experience standard that makes every finance interaction feel clearer and more optimistic.
- */
-
+/** Company-first About page. */
 import { Link } from "wouter";
 import { ArrowRight, Eye, Gauge, Lightbulb, Sparkles, Telescope } from "lucide-react";
-import { PageHero } from "@/components/PagePrimitives";
 import { Seo, breadcrumbSchema } from "@/components/Seo";
-import { ArrowLink, Eyebrow, FinalCta, SectionIntro } from "@/components/Shared";
+import { Eyebrow, FinalCta } from "@/components/Shared";
 import { SiteLayout } from "@/components/SiteChrome";
 import { ReviewProof } from "@/components/ReviewProof";
 import { assets } from "@/lib/siteData";
 
 const principles = [
-  [Lightbulb, "Start With Possibility", "The conversation begins with what you are trying to build—not the lender, policy or interest rate."],
-  [Eye, "Challenge the Obvious", "The first answer is not always the best answer. Better strategy starts with better questions."],
-  [Gauge, "Make It Easy", "Finance is complicated enough. Our role is to remove friction and explain the complexity without hiding it."],
-  [Sparkles, "Build Momentum", "Every approval should create another opportunity rather than close the conversation at settlement."],
-  [Telescope, "Never Settle", "We keep looking for better ideas, clearer systems and stronger outcomes—for clients and for the business."],
-];
+  [Lightbulb, "Start With Possibility", "Begin with the person, the ambition and what they are trying to build."],
+  [Eye, "Challenge the Obvious", "Ask better questions and test the path instead of defaulting to the obvious answer."],
+  [Gauge, "Make It Easy", "Simplify the complexity and make the next decision easier to understand."],
+  [Sparkles, "Build Momentum", "Use today’s approval to support what may come next."],
+  [Telescope, "Think Longer", "Build relationships measured in years and outcomes—not transactions."],
+] as const;
 
 export default function About() {
-  return (
-    <SiteLayout>
-      <Seo
-        description="Next Move Loans exists to reduce uncertainty, create clarity and help Australians build what comes next through strategy-led finance and long-term support."
-        image={assets.hero}
-        jsonLd={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "About", path: "/about" }])}
-        path="/about"
-        title="About Next Move Loans | Everyone’s Building Something"
-      />
-      <main id="main-content">
-        <PageHero
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "About Next Move Loans" }]}
-          challenge="Does this help us unlock the path for the people we serve?"
-          dark
-          eyebrow="OUR WHY"
-          intro={<p>We are not building another finance business. We are building a business that helps people build what’s next.</p>}
-          title={<>Everyone’s building something. <em>We unlock the path.</em></>}
-        >
-          <Link className="button button-coral" href="/plan-your-next-move">
-            Plan Your Next Move<ArrowRight aria-hidden="true" className="size-4" />
-          </Link>
-        </PageHero>
+  return <SiteLayout>
+    <Seo description="Why Next Move Loans exists: a finance business built around long-term relationships, better questions and helping people build what comes next." image={assets.hero} jsonLd={breadcrumbSchema([{name:"Home",path:"/"},{name:"About",path:"/about"}])} path="/about" title="About Next Move Loans | Why We Exist" />
+    <main id="main-content">
+      <section className="bg-[#16203A] py-12 text-white lg:py-16">
+        <div className="container max-w-5xl">
+          <Eyebrow light>WHY NEXT MOVE LOANS EXISTS</Eyebrow>
+          <h1 className="mt-4 text-[clamp(2.5rem,5vw,5rem)] font-black leading-[0.98] tracking-[-0.05em] text-white">We are not building another finance business.<span className="mt-2 block text-[#EC7354]">We are building a business that helps people build what’s next.</span></h1>
+          <div className="mt-7"><Link className="button button-coral" href="/contact-us">Contact Us <ArrowRight className="size-4" /></Link></div>
+        </div>
+      </section>
 
-        <section className="section-space bg-[#F7F5F1]">
-          <div className="container grid gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-            <SectionIntro
-              body={<p>People rarely wake up wanting a loan. They want a home, more space, a growing business, wealth, freedom or a better life.</p>}
-              eyebrow="FINANCE IS THE VEHICLE"
-              index="01"
-              title={<>The goal is bigger than the <em>loan.</em></>}
-            />
-            <div className="belief-stack">
-              {["A home.", "A family.", "A business.", "Wealth.", "A better life."].map((belief, index) => (
-                <div key={belief}><span>0{index + 1}</span><p>{belief}</p></div>
-              ))}
-            </div>
+      <section className="bg-white py-12 lg:py-16">
+        <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div><Eyebrow>THE IDEA</Eyebrow><h2 className="mt-3 text-[clamp(2rem,3.5vw,3.4rem)] font-black leading-[1.04] tracking-[-0.04em] text-[#16203A]">The loan is usually only the immediate need.</h2></div>
+          <div className="space-y-5 text-lg leading-8 text-[#4C5566]">
+            <p>Next Move Loans was founded by mortgage broker Marty Reidy after seeing too many people treated as a transaction rather than a long-term relationship.</p>
+            <p>A loan might be the immediate need. But behind it is usually something much bigger:</p>
+            <div className="grid gap-2 font-semibold text-[#16203A]"><p>A family needing more space.</p><p>A first buyer wanting a start.</p><p>An investor building financial freedom.</p><p>A business owner turning hard work into personal wealth.</p><p>A family creating a different lifestyle.</p></div>
+            <p>That is why we begin with the person, the ambition and the Game Plan—not the product.</p>
+            <p>Today, we are building a team of brokers who believe in asking better questions, challenging the obvious and helping clients make confident decisions for the next ten years—not just the next transaction.</p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="enemy-section">
-          <div className="container grid gap-12 lg:grid-cols-[0.65fr_1.35fr] lg:items-center">
-            <div>
-              <Eyebrow light>OUR ENEMY</Eyebrow>
-              <h2>Uncertainty.</h2>
-            </div>
-            <div className="enemy-copy">
-              <p>Not knowing where to start. Not knowing what is possible. Not knowing who to trust. Trying to make one of life’s biggest decisions alone.</p>
-              <p>We believe people deserve clarity, a strategy, the right support and the confidence to move forward.</p>
-            </div>
-          </div>
-        </section>
+      <section className="bg-[#F7F5F1] py-12 lg:py-16">
+        <div className="container">
+          <div className="max-w-3xl"><Eyebrow>HOW WE WANT TO WORK</Eyebrow><h2 className="mt-3 text-[clamp(2rem,3.4vw,3.3rem)] font-black leading-[1.04] tracking-[-0.04em] text-[#16203A]">A better finance relationship starts with better questions.</h2></div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-5">{principles.map(([Icon,title,body]) => {const I=Icon;return <article className="rounded-[1.25rem] border border-[#16203A]/10 bg-white p-5" key={title}><I className="size-5 text-[#EC7354]"/><h3 className="mt-4 text-lg font-black text-[#16203A]">{title}</h3><p className="mt-2 text-sm leading-6 text-[#4C5566]">{body}</p></article>})}</div>
+        </div>
+      </section>
 
-        <section className="section-space bg-white">
-          <div className="container">
-            <SectionIntro
-              body={<p>People may not remember every policy detail. They remember whether the conversation left them more informed, optimistic and ready to move.</p>}
-              eyebrow="THE NEXT MOVE EXPERIENCE™"
-              index="02"
-              title={<>The standard is not a good mortgage experience. It is <em>a clearer next move.</em></>}
-            />
-            <div className="principle-grid">
-              {principles.map(([Icon, title, body], index) => {
-                const PrincipleIcon = Icon as typeof Lightbulb;
-                return (
-                  <article className="principle-card" key={title as string}>
-                    <span className="principle-number">0{index + 1}</span>
-                    <PrincipleIcon aria-hidden="true" />
-                    <h3>{title as string}</h3>
-                    <p>{body as string}</p>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="voice-section">
-          <div className="container grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
-            <div className="voice-art">
-              <img alt="A pathway linking a home, business and future opportunities" loading="lazy" src={assets.hero} />
-              <span>CHALLENGE / EDUCATE / ENTERTAIN / INSPIRE</span>
-            </div>
-            <div>
-              <Eyebrow>OUR VOICE</Eyebrow>
-              <h2 className="section-title">If we could be mistaken for another finance company, we have failed.</h2>
-              <p className="mt-5 text-lg leading-8 text-[#4C5566]">
-                We challenge conventional thinking, simplify complexity and freely share ideas that help people make better decisions. Confident, optimistic, straightforward, curious, authentic and human.
-              </p>
-              <p className="voice-quote">A useful perspective should help you see the decision differently.</p>
-              <div className="mt-8"><ArrowLink href="/learn">See the voice in action</ArrowLink></div>
-            </div>
-          </div>
-        </section>
-
-        <ReviewProof compact placement="about" />
-        <FinalCta />
-      </main>
-    </SiteLayout>
-  );
+      <ReviewProof compact placement="about" />
+      <FinalCta title="What are you building next?" body="Start with a conversation. We will help you work out the useful next step." />
+    </main>
+  </SiteLayout>;
 }
