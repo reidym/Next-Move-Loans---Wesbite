@@ -1,4 +1,6 @@
-import type { ArticleData } from "@/lib/siteData";
+import type { ArticleData } from "@/lib/articleLibrary";
+import { applyArticleVoiceToMany } from "@/lib/articleVoice";
+import { ensureAspirationalDepthForMany } from "@/lib/articleAspirationalDepth";
 
 export type CmsArticleRow = {
   page: { slug: string; title: string; eyebrow: string | null; excerpt: string | null; sections: Array<Record<string, unknown>>; publishAt: Date | string | null; updatedAt: Date | string; ctaKey: string | null };
@@ -26,7 +28,7 @@ export function cmsArticleToArticleData(row: CmsArticleRow): ArticleData & { aut
     audience: row.page.eyebrow ?? undefined,
     decision: row.page.eyebrow ?? undefined,
     tags: row.article.tags,
-    readMinutes: Math.max(2, Math.ceil(words / 210)),
+    readMinutes: Math.max(4, Math.ceil(words / 210)),
     publishedAt: iso(row.article.publicationDate ?? row.page.publishAt),
     updatedAt: iso(row.article.contentUpdatedDate ?? row.page.updatedAt),
     sourceNote: row.article.sourceNotes ?? undefined,
@@ -34,9 +36,12 @@ export function cmsArticleToArticleData(row: CmsArticleRow): ArticleData & { aut
   };
 }
 
+const finishArticles = (items: ArticleData[]) => ensureAspirationalDepthForMany(applyArticleVoiceToMany(items));
+
 export function mergeCmsArticles(staticArticles: ArticleData[], cmsRows: CmsArticleRow[] | undefined) {
-  if (!cmsRows?.length) return staticArticles.map(article => ({ ...article, authorName: "Martin Reidy" }));
+  if (!cmsRows?.length) return finishArticles(staticArticles).map(article => ({ ...article, authorName: "Martin Reidy" }));
   const cmsArticles = cmsRows.map(cmsArticleToArticleData);
   const cmsSlugs = new Set(cmsArticles.map(article => article.slug));
-  return [...cmsArticles, ...staticArticles.filter(article => !cmsSlugs.has(article.slug)).map(article => ({ ...article, authorName: "Martin Reidy" }))];
+  const merged = [...cmsArticles, ...staticArticles.filter(article => !cmsSlugs.has(article.slug)).map(article => ({ ...article, authorName: "Martin Reidy" }))];
+  return finishArticles(merged);
 }

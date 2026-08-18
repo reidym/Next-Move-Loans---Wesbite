@@ -1,146 +1,27 @@
-/**
- * Pathfinder Editorial service template: lead with the decision, show fit and trade-offs,
- * then connect the lending path to the Approval Method and related next moves.
- */
-
 import { Link, useParams } from "wouter";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { PageHero } from "@/components/PagePrimitives";
+import { ArrowRight, Check, Phone } from "lucide-react";
 import { Seo, breadcrumbSchema, organizationSchema } from "@/components/Seo";
-import { ArrowLink, Checklist, FaqBlock, FinalCta, ProcessPath, QuestionsBand, SectionIntro } from "@/components/Shared";
+import { Eyebrow, FaqBlock } from "@/components/Shared";
 import { SiteLayout } from "@/components/SiteChrome";
 import { ReviewProof } from "@/components/ReviewProof";
 import NotFound from "@/pages/NotFound";
-import { contactDetails, getCategory, getService, services, siteUrl } from "@/lib/siteData";
+import { approvalSteps, contactDetails, getCategory, siteUrl } from "@/lib/siteData";
+import { getWebsiteService } from "@/lib/serviceCatalog";
 
-export default function ServicePage() {
-  const params = useParams<{ slug: string }>();
-  const service = getService(params.slug);
-  if (!service) return <NotFound />;
+function potentialPath(question:string,serviceTitle:string){const q=question.toLowerCase();if(q.includes("buy before")||q.includes("sell first")||q.includes("sale"))return"Compare sell-first, buy-first and bridging scenarios, including peak debt, buffers and timing.";if(q.includes("rate")||q.includes("switch")||q.includes("cost"))return"Compare the real cost of changing lenders—rate, fees, loan term, cash flow and break-even point.";if(q.includes("interest-only")||q.includes("principal"))return"Compare the repayment, cash-flow and future impact of interest-only versus principal-and-interest rather than treating either as automatically better.";if(q.includes("term"))return"Model different terms and repayments to see what improves the position, not just the monthly number.";if(q.includes("equity"))return"Calculate usable equity, the purpose of the release, loan splits and the impact of the additional debt.";if(q.includes("capacity")||q.includes("borrowing")||q.includes("lender"))return"Compare lender policy, serviceability and sequencing to identify whether the constraint is your position or one lender’s rules.";if(q.includes("valuation")||q.includes("security")||q.includes("classify")||q.includes("land"))return"Check the property and lender policy early, before a valuation or contract deadline creates the problem.";if(q.includes("structure")||q.includes("ownership"))return"Compare available structures and lending trade-offs, with accountant or adviser input where their advice is needed.";if(q.includes("cash")||q.includes("buffer")||q.includes("repayment"))return"Model repayments, buffers and cash flow so the finance supports the move without squeezing everything else.";if(q.includes("document")||q.includes("income")||q.includes("business"))return"Work through how the income is earned, what evidence lenders may use and how to present the position clearly.";return`Compare the lender, structure, timing and trade-offs around ${serviceTitle.toLowerCase()} before you commit.`;}
 
-  const category = getCategory(service.category)!;
-  const related = services.filter((item) => item.category === service.category && item.slug !== service.slug).slice(0, 3);
-  const path = `/services/${service.slug}`;
-  const jsonLd = [
-    organizationSchema,
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: service.title,
-      description: service.short,
-      url: `${siteUrl}${path}`,
-      provider: { "@type": "Organization", name: "Next Move Loans", url: siteUrl },
-      areaServed: ["Victoria", "Leongatha", "Warragul", "Berwick", "Gippsland", "Melbourne South-East"],
-    },
-    breadcrumbSchema([
-      { name: "Home", path: "/" },
-      { name: category.title, path: category.path },
-      { name: service.title, path },
-    ]),
-  ];
+export default function ServicePage(){const params=useParams<{slug:string}>();const service=getWebsiteService(params.slug);if(!service)return <NotFound/>;const category=getCategory(service.category)!;const path=`/services/${service.slug}`;const jsonLd=[organizationSchema,{"@context":"https://schema.org","@type":"Service",name:service.title,description:service.short,url:`${siteUrl}${path}`,provider:{"@type":"Organization",name:"Next Move Loans",url:siteUrl},areaServed:"Australia"},breadcrumbSchema([{name:"Home",path:"/"},{name:category.title,path:category.path},{name:service.title,path}])];return <SiteLayout><Seo description={service.short} image={category.image} jsonLd={jsonLd} path={path} title={`${service.title} | Next Move Loans`}/><main id="main-content" className="bg-white">
+<section className="py-9 lg:py-11"><div className="container grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end"><div><Eyebrow>{service.eyebrow}</Eyebrow><h1 className="mt-2 max-w-4xl text-[clamp(2rem,3.5vw,3.5rem)] font-black leading-[1.02] tracking-[-0.04em] text-[#16203A]">{service.title}</h1><p className="mt-3 max-w-3xl text-lg font-semibold leading-8 text-[#16203A]">{service.challenge}</p><p className="mt-2 max-w-3xl leading-7 text-[#4C5566]">{service.short}</p></div><div className="flex flex-wrap gap-3"><Link className="button button-coral" href="/contact-us">Contact Us <ArrowRight className="size-4"/></Link><a className="button button-outline-dark" href={contactDetails.landlineHref}><Phone className="size-4"/>{contactDetails.landlineDisplay}</a></div></div></section>
 
-  return (
-    <SiteLayout>
-      <Seo description={service.short} image={category.image} jsonLd={jsonLd} path={path} title={`${service.title} | Next Move Loans`} />
-      <main className={`service-page service-theme-${service.category}`} id="main-content">
-        <PageHero
-          breadcrumbs={[
-            { label: "Home", href: "/" },
-            { label: category.title, href: category.path },
-            { label: service.title },
-          ]}
-          challenge={service.challenge}
-          dark={service.category === "business-commercial" || service.category === "asset"}
-          eyebrow={service.eyebrow}
-          image={category.image}
-          intro={<><p>{service.short}</p><p>{service.intro}</p></>}
-          title={service.title}
-        >
-          <div className="flex flex-wrap gap-3">
-            <Link className="button button-coral" href="/plan-your-next-move">
-              {service.cta}<ArrowRight aria-hidden="true" className="size-4" />
-            </Link>
-            <a className="button button-outline-dark" href={contactDetails.landlineHref}>Call {contactDetails.landlineDisplay}</a>
-          </div>
-        </PageHero>
+<section className="bg-[#F3F7FF] py-9 lg:py-11"><div className="container"><div className="max-w-3xl"><Eyebrow>COMMON QUESTIONS</Eyebrow><h2 className="mt-2 text-[clamp(1.7rem,2.5vw,2.5rem)] font-black tracking-[-0.03em] text-[#16203A]">Start with the question you are actually trying to solve.</h2></div><div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{service.decisions.map((question,index)=><div className="rounded-2xl bg-white p-5" key={question}><span className="text-xs font-black text-[#EC7354]">0{index+1}</span><h3 className="mt-2 text-lg font-black leading-tight text-[#16203A]">{question}</h3><p className="mt-2 text-sm leading-6 text-[#4C5566]">{potentialPath(question,service.title)}</p></div>)}</div><div className="mt-6 flex flex-wrap items-center justify-between gap-4"><p className="font-semibold text-[#16203A]">Have a different question?</p><Link className="button button-coral button-small" href="/contact-us">Ask Us</Link></div></div></section>
 
-        <section className="service-statement">
-          <div className="container grid gap-7 lg:grid-cols-[0.25fr_0.75fr] lg:items-start">
-            <span className="service-statement-index">01 / FIT</span>
-            <p>{service.challenge}</p>
-          </div>
-        </section>
+<section className="bg-white py-9 lg:py-11"><div className="container grid gap-7 lg:grid-cols-[0.58fr_1.42fr]"><div><Eyebrow>WHEN THIS MAY FIT</Eyebrow><h2 className="mt-2 text-2xl font-black text-[#16203A]">Common situations.</h2><p className="mt-3 leading-7 text-[#4C5566]">{service.intro}</p></div><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{service.fit.map(item=><div className="flex items-start gap-3 rounded-2xl bg-[#F3F7FF] p-4" key={item}><Check className="mt-1 size-4 shrink-0 text-[#EC7354]"/><p className="font-semibold leading-6 text-[#16203A]">{item}</p></div>)}</div></div></section>
 
-        <section className="section-space bg-white">
-          <div className="container grid gap-14 lg:grid-cols-[0.82fr_1.18fr]">
-            <SectionIntro
-              body={<p>This may be a useful conversation if one or more of these situations sounds familiar.</p>}
-              eyebrow="WHERE THIS PATH MAY FIT"
-              index="01"
-              title={<>Start with the situation. <em>Not the product.</em></>}
-            />
-            <div className="service-fit-panel">
-              <Checklist items={service.fit} />
-              <div className="mt-9 border-t border-[#16203A]/12 pt-7">
-                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#9A6F00]">What we clarify first</p>
-                <p className="mt-3 text-lg leading-8 text-[#4C5566]">Your current position, intended outcome, timing, constraints, relevant property or asset, and the options you want the decision to leave open.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+<section className="border-y border-[#16203A]/10 bg-white py-8 lg:py-9"><div className="container"><div className="flex flex-wrap items-end justify-between gap-5"><div><Eyebrow>THE GAME PLAN</Eyebrow><h2 className="mt-2 text-2xl font-black text-[#16203A]">Clarity first. Finance second.</h2></div><Link className="text-sm font-black text-[#EC7354]" href="/game-plan">See The Game Plan →</Link></div><div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-4">{approvalSteps.map(step=><div className="border-t-2 border-[#EC7354] pt-3" key={step.number}><span className="text-xs font-black text-[#EC7354]">{step.number}</span><h3 className="mt-2 text-base font-black text-[#16203A]">{step.title}</h3><p className="mt-1 text-sm leading-6 text-[#4C5566]">{step.short}</p></div>)}</div></div></section>
 
-        <section className="bg-[#16203A] py-16 text-[#F7F5F1] lg:py-20">
-          <div className="container">
-            <QuestionsBand questions={service.decisions} />
-          </div>
-        </section>
+<ReviewProof compact placement="services"/>
 
-        <section className="section-space bg-[#F7F5F1]">
-          <div className="container grid gap-14 lg:grid-cols-[0.72fr_1.28fr]">
-            <div>
-              <SectionIntro
-                body={<p>The same four-step method keeps this service connected to the wider plan.</p>}
-                eyebrow="HOW WE WORK"
-                index="02"
-                title={<>Clarity today. Strategy tomorrow. <em>Opportunity always.</em></>}
-              />
-              <div className="mt-8"><ArrowLink href="/approval-method">Explore The Approval Method™</ArrowLink></div>
-            </div>
-            <ProcessPath compact />
-          </div>
-        </section>
+<section className="bg-white py-9 lg:py-11"><div className="container grid gap-6 lg:grid-cols-[0.62fr_1.38fr]"><div><Eyebrow>QUICK ANSWERS</Eyebrow><h2 className="mt-2 text-2xl font-black text-[#16203A]">What people usually ask next.</h2></div><FaqBlock items={service.faq}/></div></section>
 
-        <section className="section-space bg-white">
-          <div className="container">
-            <SectionIntro eyebrow="RELATED NEXT MOVES" index="03" title="The decision rarely sits alone." />
-            <div className="related-service-grid">
-              {related.map((item, index) => (
-                <Link className="related-service-card group" href={`/services/${item.slug}`} key={item.slug}>
-                  <span>0{index + 1}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.short}</p>
-                  <ArrowUpRight aria-hidden="true" className="mt-auto size-5 text-[#EC7354] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section-space bg-[#EFEAE2]">
-          <div className="container grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
-            <SectionIntro
-              body={<p>Clear answers start with the right context. These are useful starting points, not personal lending advice.</p>}
-              eyebrow="COMMON QUESTIONS"
-              index="04"
-              title={`Questions about ${service.title.toLowerCase()}.`}
-            />
-            <FaqBlock items={service.faq} />
-          </div>
-        </section>
-
-        <ReviewProof compact placement="services" />
-        <FinalCta title={`Ready to make ${service.title.toLowerCase()} part of a clearer plan?`} />
-      </main>
-    </SiteLayout>
-  );
-}
+<section className="bg-[#16203A] py-7 text-white"><div className="container flex flex-wrap items-center justify-between gap-5"><div><p className="text-xs font-black uppercase tracking-[0.14em] text-[#EC7354]">NEXT STEP</p><h2 className="mt-1 text-xl font-black">Talk through the question before you commit to the loan.</h2></div><div className="flex flex-wrap gap-3"><Link className="button button-coral" href="/contact-us">Contact Us</Link><Link className="button button-outline-light" href="/book-a-call">Book a Call</Link></div></div></section>
+</main></SiteLayout>}

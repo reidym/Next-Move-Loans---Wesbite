@@ -1,85 +1,62 @@
-/**
- * Pathfinder Editorial finance hub: one strong category proposition, a visible service spine,
- * and enough depth for search without turning the page into an undifferentiated card wall.
- */
-
 import { Link, useParams } from "wouter";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { PageHero } from "@/components/PagePrimitives";
+import { ArrowRight, ArrowUpRight, Phone } from "lucide-react";
 import { Seo, breadcrumbSchema } from "@/components/Seo";
-import { ArrowLink, FinalCta, SectionIntro } from "@/components/Shared";
+import { Eyebrow } from "@/components/Shared";
 import { SiteLayout } from "@/components/SiteChrome";
 import NotFound from "@/pages/NotFound";
-import { getCategory, services } from "@/lib/siteData";
+import { contactDetails, getCategory } from "@/lib/siteData";
+import { getWebsiteCategoryServices } from "@/lib/serviceCatalog";
 
-export default function CategoryPage() {
-  const params = useParams<{ category: string }>();
-  const category = getCategory(params.category);
-  if (!category) return <NotFound />;
-  const categoryServices = services.filter((service) => service.category === category.id);
+const categoryIntro: Record<string, string> = {
+  "home-property": "Buying, upgrading, refinancing or building? Choose the move and go straight to the questions that matter.",
+  investment: "Starting with your first investment or already building a portfolio? Choose where you are now—not the product name you think you need.",
+  "business-commercial": "Home lending for business owners, business growth, commercial property or working capital. Start with the outcome.",
+  asset: "Vehicles, machinery and equipment. Choose the asset or funding need and we’ll work through the structure from there.",
+};
 
-  return (
-    <SiteLayout>
-      <Seo
-        description={category.description}
-        image={category.image}
-        jsonLd={breadcrumbSchema([{ name: "Home", path: "/" }, { name: category.title, path: category.path }])}
-        path={category.path}
-        title={`${category.title} Finance | Next Move Loans`}
-      />
-      <main id="main-content">
-        <PageHero
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Finance", href: "/#finance" }, { label: category.title }]}
-          challenge={category.challenge}
-          eyebrow={category.eyebrow}
-          image={category.image}
-          intro={<p>{category.description}</p>}
-          title={category.title}
-        >
-          <Link className="button button-coral" href="/plan-your-next-move">
-            Plan Your Next Move<ArrowRight aria-hidden="true" className="size-4" />
-          </Link>
-        </PageHero>
+export default function CategoryPage(){
+  const params=useParams<{category:string}>();
+  const category=getCategory(params.category);
+  if(!category)return <NotFound/>;
+  const categoryServices=getWebsiteCategoryServices(category.id);
 
-        <section className="section-space bg-white">
-          <div className="container">
-            <SectionIntro
-              body={<p>Choose the situation closest to the move in front of you. The first conversation can still begin before you know exactly which service fits.</p>}
-              eyebrow="PATHWAYS, NOT PRODUCT SHELVES"
-              index="01"
-              title={<>Where does the <em>current move</em> begin?</>}
-            />
-            <div className="service-list-spine">
-              {categoryServices.map((service, index) => (
-                <Link className="service-list-row group" href={`/services/${service.slug}`} key={service.slug}>
-                  <span className="service-list-number">{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h2>{service.title}</h2>
-                    <p>{service.short}</p>
-                  </div>
-                  <span className="service-list-action">
-                    Explore<ArrowUpRight aria-hidden="true" />
-                  </span>
-                </Link>
-              ))}
-            </div>
+  return <SiteLayout>
+    <Seo description={category.description} image={category.image} jsonLd={breadcrumbSchema([{name:"Home",path:"/"},{name:category.title,path:category.path}])} path={category.path} title={`${category.title} Finance | Next Move Loans`}/>
+    <main id="main-content" className="bg-white">
+      <section className="py-10 lg:py-12">
+        <div className="container flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Eyebrow>FINANCE</Eyebrow>
+            <h1 className="mt-2 text-[clamp(2rem,3.4vw,3.4rem)] font-black leading-[1.02] tracking-[-0.04em] text-[#16203A]">{category.title}</h1>
+            <p className="mt-3 max-w-3xl text-lg leading-7 text-[#4C5566]">{categoryIntro[category.id] ?? "Choose the area that matches what you are trying to do."}</p>
           </div>
-        </section>
-
-        <section className="category-question-band">
-          <div className="container grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <span>THE BETTER STARTING POINT</span>
-              <h2>Not sure which service fits? Good. Start with the decision.</h2>
-              <p>Tell us what you are trying to build, what may be standing in the way and when the move needs to happen.</p>
-            </div>
-            <ArrowLink href="/plan-your-next-move" light>Plan Your Next Move</ArrowLink>
+          <div className="flex flex-wrap gap-3">
+            <Link className="button button-coral" href="/contact-us">Contact Us <ArrowRight className="size-4"/></Link>
+            <a className="button button-outline-dark" href={contactDetails.landlineHref}><Phone className="size-4"/>{contactDetails.landlineDisplay}</a>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <FinalCta />
-      </main>
-    </SiteLayout>
-  );
+      <section className="pb-12 lg:pb-14">
+        <div className="container">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {categoryServices.map(service=>
+              <Link className="group flex min-h-[145px] flex-col justify-between rounded-2xl bg-[#F1F6FA] p-6 transition hover:-translate-y-0.5 hover:shadow-md" href={`/services/${service.slug}`} key={service.slug}>
+                <div>
+                  <h2 className="text-xl font-black text-[#16203A]">{service.title}</h2>
+                  <p className="mt-2 text-sm leading-6 text-[#4C5566]">{service.short}</p>
+                </div>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#16203A]">Explore <ArrowUpRight className="size-4 text-[#EC7354]"/></span>
+              </Link>
+            )}
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#16203A]/10 pt-6">
+            <p className="font-semibold text-[#16203A]">Not sure where you fit? Tell us what you are trying to make happen.</p>
+            <Link className="button button-coral button-small" href="/contact-us">Ask Us</Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  </SiteLayout>;
 }
-

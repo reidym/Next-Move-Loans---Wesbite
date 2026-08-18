@@ -1,60 +1,40 @@
 import { Link } from "wouter";
-import { ArrowUpRight, Phone } from "lucide-react";
-import { PageHero } from "@/components/PagePrimitives";
+import { ArrowRight, ArrowUpRight, BriefcaseBusiness, Building2, Home, Tractor } from "lucide-react";
 import { Seo, breadcrumbSchema } from "@/components/Seo";
-import { Eyebrow } from "@/components/Shared";
 import { SiteLayout } from "@/components/SiteChrome";
-import { assets, contactDetails, serviceCategories, services, siteUrl } from "@/lib/siteData";
+import { serviceCategories } from "@/lib/siteData";
 
-export default function LoanTypes() {
-  const path = "/loan-types";
-  return (
-    <SiteLayout>
-      <Seo
-        description="Explore home, investment, business, commercial, rural, vehicle, equipment and machinery loan types available through Next Move Loans."
-        jsonLd={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Loan Types", path }])}
-        path={path}
-        title="Loan Types | Next Move Loans"
-      />
-      <main id="main-content">
-        <PageHero
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Loan Types" }]}
-          challenge="Start with the outcome if the product name is not yet clear."
-          eyebrow="TYPES OF FINANCE"
-          image={assets.businessCommercial}
-          intro={<><p>Loan types explain the facility. Solutions explain the decision. Use either route to find the right starting conversation.</p><p>Availability, eligibility and suitability depend on the borrower, purpose, security, evidence and lender policy.</p></>}
-          title={<>The finance range. <em>Plainly organised.</em></>}
-        >
-          <div className="flex flex-wrap gap-3"><Link className="button button-coral" href="/#solutions">Browse by solution</Link><a className="button button-outline-dark" href={contactDetails.landlineHref}><Phone aria-hidden="true" className="size-4" /> {contactDetails.landlineDisplay}</a></div>
-        </PageHero>
+const icons = [Home, Building2, BriefcaseBusiness, Tractor];
+const copy: Record<string,string> = {
+  "home-property": "Buy your first home, upgrade, refinance, build, bridge or move to acreage.",
+  investment: "Buy your first investment, add the next property, release equity or improve the portfolio structure.",
+  "business-commercial": "Self-employed home lending, business growth, working capital and commercial property finance.",
+  asset: "Vehicles, machinery and equipment finance that keeps working capital in view.",
+};
 
-        {serviceCategories.map((category, categoryIndex) => {
-          const categoryServices = services.filter(service => service.category === category.id);
-          return (
-            <section className={`section-space ${categoryIndex % 2 === 0 ? "bg-white" : "bg-[#EFEAE2]"}`} key={category.id}>
-              <div className="container grid gap-10 lg:grid-cols-[0.58fr_1.42fr]">
-                <div>
-                  <Eyebrow>{category.eyebrow}</Eyebrow>
-                  <h2 className="solution-subheading">{category.title}</h2>
-                  <p className="mt-5 max-w-md leading-7 text-[#4C5566]">{category.description}</p>
-                  <Link className="arrow-link mt-7" href={category.path}>View the category hub <ArrowUpRight aria-hidden="true" className="size-4" /></Link>
-                </div>
-                <div className="loan-type-index-list">
-                  {categoryServices.map((service, index) => (
-                    <Link href={`/services/${service.slug}`} key={service.slug}>
-                      <span>0{index + 1}</span><div><h3>{service.title}</h3><p>{service.short}</p></div><ArrowUpRight aria-hidden="true" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </section>
-          );
-        })}
+export default function LoanTypes(){
+  const path="/loan-types";
+  return <SiteLayout>
+    <Seo description="Explore home, investment, business, commercial and asset finance options with Next Move Loans." jsonLd={breadcrumbSchema([{name:"Home",path:"/"},{name:"Loan Types",path}])} path={path} title="Loan Types | Next Move Loans"/>
+    <main id="main-content" className="bg-white">
+      <section className="py-10 lg:py-12">
+        <div className="container text-center">
+          <p className="text-xs font-black uppercase tracking-[0.14em] text-[#EC7354]">FINANCE</p>
+          <h1 className="mx-auto mt-3 max-w-3xl text-[clamp(2.2rem,3.7vw,3.7rem)] font-black tracking-[-0.04em] text-[#16203A]">What are you trying to make happen?</h1>
+          <p className="mx-auto mt-3 max-w-2xl text-lg leading-7 text-[#4C5566]">Choose the broad area. We’ll get into the detail on the next page.</p>
 
-        <section className="home-final-cta">
-          <div className="container grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end"><div><Eyebrow light>NOT SURE WHICH FACILITY FITS?</Eyebrow><h2>Bring us the decision first.</h2><p>We will help identify the useful loan types after the property, business, asset, timing and future options are clear.</p></div><Link className="button button-coral" href="/plan-your-next-move">Plan Your Next Move <ArrowUpRight aria-hidden="true" className="size-4" /></Link></div>
-        </section>
-      </main>
-    </SiteLayout>
-  );
+          <div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {serviceCategories.map((category,index)=>{const Icon=icons[index];return <Link className="group flex min-h-[220px] flex-col rounded-2xl bg-[#F3F7FF] p-6 text-left transition hover:-translate-y-1 hover:shadow-lg" href={category.path} key={category.id}>
+              <div className="grid size-11 place-items-center rounded-full bg-white text-[#16203A]"><Icon className="size-5"/></div>
+              <h2 className="mt-6 text-2xl font-black tracking-[-0.03em] text-[#16203A]">{category.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-[#4C5566]">{copy[category.id] ?? category.description}</p>
+              <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-black text-[#16203A]">Explore <ArrowUpRight className="size-4 text-[#EC7354]"/></span>
+            </Link>})}
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4"><p className="font-semibold text-[#4C5566]">Not sure where you fit?</p><Link className="button button-coral button-small" href="/contact-us">Contact Us <ArrowRight className="size-4"/></Link></div>
+        </div>
+      </section>
+    </main>
+  </SiteLayout>;
 }
