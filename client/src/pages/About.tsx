@@ -11,6 +11,13 @@ const foundations = [
   [Check, "Built for the next ten years", "The aim is not to win one transaction. It is to build a finance relationship that stays useful as your home, family, business and wealth change."],
 ] as const;
 
+const clientBenefits = [
+  "You have a broker who owns the strategy and remains accountable for the advice.",
+  "A support team helps with documents, lender follow-up, milestones and the work that keeps the application moving.",
+  "Our systems are designed so you are not left wondering where things are up to when your broker is in meetings or working on another file.",
+  "We can draw on broader lending capability across home, investment, self-employed, regional-rural, business and asset finance as your needs change.",
+];
+
 export default function About() {
   return <SiteLayout>
     <Seo description="About Next Move Loans: an Australia-wide mortgage and finance business based in Leongatha, supported by a client support team and backed by Viking Aggregation." jsonLd={breadcrumbSchema([{name:"Home",path:"/"},{name:"About Us",path:"/about"}])} path="/about" title="About Us | Next Move Loans" />
@@ -53,10 +60,10 @@ export default function About() {
       </section>
 
       <section className="border-y border-[#16203A]/10 py-9 lg:py-10">
-        <div className="container grid gap-6 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
-          <div><Eyebrow>HOW WE ARE BUILDING</Eyebrow><h2 className="mt-2 text-2xl font-black text-[#16203A]">A scalable broking business, not a personality brand.</h2></div>
+        <div className="container grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <div><Eyebrow>WHAT THAT MEANS FOR YOU</Eyebrow><h2 className="mt-2 text-[clamp(1.75rem,2.7vw,2.7rem)] font-black leading-[1.06] tracking-[-0.035em] text-[#16203A]">You should get the attention of a good broker without relying on one person to do every job.</h2><p className="mt-4 max-w-xl leading-7 text-[#4C5566]">The relationship stays personal. The business behind it gives the broker more capacity to focus on the work that actually needs their judgement.</p></div>
           <div className="grid gap-3 sm:grid-cols-2">
-            {["A support team around the broker so clients are not dependent on one person for every update.","Systems and documented processes designed to keep the experience consistent as the team grows.","Specialist lending capability across home, investment, self-employed, regional-rural, business and asset finance.","A brand and Game Plan that future brokers can deliver without changing what Next Move Loans stands for."].map(item=><div className="flex gap-3 rounded-xl bg-white p-3" key={item}><Check className="mt-1 size-4 shrink-0 text-[#EC7354]"/><p className="text-sm font-semibold leading-6 text-[#16203A]">{item}</p></div>)}
+            {clientBenefits.map(item=><div className="flex gap-3 rounded-xl bg-[#F3F7FF] p-4" key={item}><Check className="mt-1 size-4 shrink-0 text-[#EC7354]"/><p className="text-sm font-semibold leading-6 text-[#16203A]">{item}</p></div>)}
           </div>
         </div>
       </section>
