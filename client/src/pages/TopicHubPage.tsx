@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { Link, useParams } from "wouter";
 import { ArrowUpRight } from "lucide-react";
-import { PageHero } from "@/components/PagePrimitives";
 import { Seo, breadcrumbSchema } from "@/components/Seo";
-import { FinalCta, SectionIntro } from "@/components/Shared";
+import { Eyebrow } from "@/components/Shared";
 import { SiteLayout } from "@/components/SiteChrome";
-import { articles as launchArticles, siteUrl } from "@/lib/siteData";
+import { articles as launchArticles } from "@/lib/articleLibrary";
+import { siteUrl } from "@/lib/siteData";
 import { mergeCmsArticles } from "@/lib/cmsContent";
 import { getTopicHub, topicHubMatchesArticle } from "@/lib/topicHubs";
 import { usePublicData, type CmsArticleRow } from "@/lib/publicApi";
@@ -17,19 +17,16 @@ export default function TopicHubPage() {
   const cmsArticles = usePublicData<CmsArticleRow[]>("/api/public/articles");
   const articles = useMemo(() => mergeCmsArticles(launchArticles, cmsArticles.data), [cmsArticles.data]);
   const visible = useMemo(() => hub ? articles.filter(article => topicHubMatchesArticle(hub, article)) : [], [articles, hub]);
-
   if (!hub) return <NotFound />;
   const path = `/learn/topics/${hub.slug}`;
-  const jsonLd = [
-    { "@context": "https://schema.org", "@type": "CollectionPage", name: `${hub.label} finance perspectives`, description: hub.description, url: `${siteUrl}${path}`, mainEntity: { "@type": "ItemList", itemListElement: visible.map((article, index) => ({ "@type": "ListItem", position: index + 1, name: article.title, url: `${siteUrl}/learn/${article.slug}` })) } },
-    breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Learning Centre", path: "/learn" }, { name: hub.label, path }]),
-  ];
+  const jsonLd = [{"@context":"https://schema.org","@type":"CollectionPage",name:`${hub.label} finance guides`,description:hub.description,url:`${siteUrl}${path}`,mainEntity:{"@type":"ItemList",itemListElement:visible.map((article,index)=>({"@type":"ListItem",position:index+1,name:article.title,url:`${siteUrl}/learn/${article.slug}`}))}},breadcrumbSchema([{name:"Home",path:"/"},{name:"Learning Centre",path:"/learn"},{name:hub.label,path}])];
 
-  return <SiteLayout><Seo description={hub.description} jsonLd={jsonLd} path={path} title={`${hub.label} Finance Insights | Next Move Loans`} />
-    <main id="main-content"><PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Learning Centre", href: "/learn" }, { label: hub.label }]} challenge={hub.challenge} dark eyebrow={hub.eyebrow} intro={<p>{hub.description}</p>} title={<>{hub.label} <em>perspectives.</em></>} />
-      <section className="section-space bg-[#F7F5F1]"><div className="container"><SectionIntro body={<p>This hub updates automatically from current publish-ready CMS articles. Drafts, unpublished items and future scheduled content do not appear.</p>} eyebrow="CURRENT PERSPECTIVES" index="01" title={`${visible.length} useful ${visible.length === 1 ? "decision" : "decisions"}.`} />
-        <div className="learning-list">{visible.map((article, index) => <Link className="learning-row group" href={`/learn/${article.slug}`} key={article.slug}><span className="learning-row-number">{String(index + 1).padStart(2, "0")}</span><div><p className="learning-row-category">{article.category}{article.audience ? ` · ${article.audience}` : ""}</p><h2>{article.title}</h2><p>{article.summary}</p>{article.tags?.length ? <div className="learning-row-tags">{article.tags.slice(0, 4).map(tag => <span key={tag}>{tag}</span>)}</div> : null}</div><ArrowUpRight /></Link>)}{!cmsArticles.isLoading && visible.length === 0 ? <div className="learning-empty">No publish-ready perspective is assigned to this hub yet.</div> : null}</div>
-      </div></section><FinalCta title="The article is context. The next conversation makes it specific." /></main>
+  return <SiteLayout><Seo description={hub.description} jsonLd={jsonLd} path={path} title={`${hub.label} Finance Guides | Next Move Loans`} />
+    <main id="main-content" className="bg-white">
+      <section className="py-10 lg:py-12"><div className="container grid gap-5 lg:grid-cols-[1fr_0.72fr] lg:items-end"><div><Eyebrow>LEARNING CENTRE</Eyebrow><h1 className="mt-2 text-[clamp(2.1rem,3.6vw,3.6rem)] font-black tracking-[-0.04em] text-[#16203A]">{hub.label}</h1></div><p className="text-lg leading-8 text-[#4C5566]">{hub.description}</p></div></section>
+      <section className="border-y border-[#16203A]/10 bg-[#F3F7FF] py-5"><div className="container flex flex-wrap items-center justify-between gap-4"><p className="font-black text-[#16203A]">{hub.challenge}</p><Link className="text-sm font-black text-[#EC7354]" href="/learn">All articles →</Link></div></section>
+      <section className="py-8 lg:py-10"><div className="container"><div className="grid gap-x-8 border-t border-[#16203A]/10 md:grid-cols-2">{visible.map(article=><Link className="group flex gap-4 border-b border-[#16203A]/10 py-6" href={`/learn/${article.slug}`} key={article.slug}><div className="flex-1"><p className="text-xs font-black uppercase tracking-[0.12em] text-[#EC7354]">{article.category}</p><h2 className="mt-2 text-xl font-black leading-tight text-[#16203A] group-hover:text-[#EC7354]">{article.title}</h2><p className="mt-2 text-sm leading-6 text-[#4C5566]">{article.summary}</p></div><ArrowUpRight className="size-5 shrink-0 text-[#16203A]"/></Link>)}{!cmsArticles.isLoading&&visible.length===0?<p className="py-8 text-[#667080]">No article is assigned to this topic yet.</p>:null}</div></div></section>
+      <section className="bg-[#16203A] py-7 text-white"><div className="container flex flex-wrap items-center justify-between gap-4"><p className="font-black">Need to make the information specific to your position?</p><Link className="button button-coral button-small" href="/contact-us">Contact Us</Link></div></section>
+    </main>
   </SiteLayout>;
 }
-
