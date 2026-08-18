@@ -1,5 +1,6 @@
 import type { ArticleData } from "@/lib/articleLibrary";
 import { applyArticleVoiceToMany } from "@/lib/articleVoice";
+import { ensureAspirationalDepthForMany } from "@/lib/articleAspirationalDepth";
 
 export type CmsArticleRow = {
   page: { slug: string; title: string; eyebrow: string | null; excerpt: string | null; sections: Array<Record<string, unknown>>; publishAt: Date | string | null; updatedAt: Date | string; ctaKey: string | null };
@@ -35,10 +36,12 @@ export function cmsArticleToArticleData(row: CmsArticleRow): ArticleData & { aut
   };
 }
 
+const finishArticles = (items: ArticleData[]) => ensureAspirationalDepthForMany(applyArticleVoiceToMany(items));
+
 export function mergeCmsArticles(staticArticles: ArticleData[], cmsRows: CmsArticleRow[] | undefined) {
-  if (!cmsRows?.length) return applyArticleVoiceToMany(staticArticles).map(article => ({ ...article, authorName: "Martin Reidy" }));
+  if (!cmsRows?.length) return finishArticles(staticArticles).map(article => ({ ...article, authorName: "Martin Reidy" }));
   const cmsArticles = cmsRows.map(cmsArticleToArticleData);
   const cmsSlugs = new Set(cmsArticles.map(article => article.slug));
   const merged = [...cmsArticles, ...staticArticles.filter(article => !cmsSlugs.has(article.slug)).map(article => ({ ...article, authorName: "Martin Reidy" }))];
-  return applyArticleVoiceToMany(merged);
+  return finishArticles(merged);
 }
