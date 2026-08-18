@@ -1,4 +1,4 @@
-import type { ArticleData } from "@/lib/siteData";
+import type { ArticleData } from "@/lib/articleLibrary";
 
 export type CmsArticleRow = {
   page: { slug: string; title: string; eyebrow: string | null; excerpt: string | null; sections: Array<Record<string, unknown>>; publishAt: Date | string | null; updatedAt: Date | string; ctaKey: string | null };
@@ -26,7 +26,7 @@ export function cmsArticleToArticleData(row: CmsArticleRow): ArticleData & { aut
     audience: row.page.eyebrow ?? undefined,
     decision: row.page.eyebrow ?? undefined,
     tags: row.article.tags,
-    readMinutes: Math.max(2, Math.ceil(words / 210)),
+    readMinutes: Math.max(4, Math.ceil(words / 210)),
     publishedAt: iso(row.article.publicationDate ?? row.page.publishAt),
     updatedAt: iso(row.article.contentUpdatedDate ?? row.page.updatedAt),
     sourceNote: row.article.sourceNotes ?? undefined,
