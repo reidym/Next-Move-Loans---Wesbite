@@ -5,13 +5,14 @@ import { Seo, organizationSchema } from "@/components/Seo";
 import { ArrowLink, Eyebrow } from "@/components/Shared";
 import { SiteLayout } from "@/components/SiteChrome";
 import { ReviewProof } from "@/components/ReviewProof";
-import { approvalSteps, articles, assets, contactDetails } from "@/lib/siteData";
+import { approvalSteps, assets, contactDetails } from "@/lib/siteData";
+import { articles } from "@/lib/articleLibrary";
 import { mergeCmsArticles } from "@/lib/cmsContent";
 import { usePublicData, type CmsArticleRow } from "@/lib/publicApi";
 
 const financePillars = [
   { title: "Home & Property", reason: "Make the move without losing sight of cash flow, flexibility and what comes next.", href: "/finance/home-property" },
-  { title: "Investment", reason: "Protect borrowing capacity and structure the current move around future opportunities.", href: "/finance/investment" },
+  { title: "Investment", reason: "Start investing or build the next property without losing sight of borrowing capacity.", href: "/finance/investment" },
   { title: "Business & Commercial", reason: "Turn business performance into funding options that support the opportunity in front of you.", href: "/finance/business-commercial" },
   { title: "Asset Finance", reason: "Put the asset to work while protecting working capital and cash flow.", href: "/finance/asset" },
 ] as const;
@@ -32,7 +33,9 @@ export default function Home() {
 
       <ReviewProof compact placement="home" />
 
-      <section className="bg-white py-8 lg:py-9" id="learn"><div className="container"><div className="flex items-end justify-between gap-4"><div><Eyebrow>LEARNING CENTRE</Eyebrow><h2 className="mt-2 text-2xl font-black text-[#16203A]">Useful thinking for your next move.</h2></div><ArrowLink href="/learn">View all</ArrowLink></div><div className="mt-5 grid gap-x-8 border-t border-[#16203A]/10 md:grid-cols-3">{learningArticles.slice(0,3).map(article=><Link className="group border-b border-[#16203A]/10 py-5 md:border-b-0" href={`/learn/${article.slug}`} key={article.slug}><p className="text-xs font-black uppercase tracking-[0.12em] text-[#EC7354]">{article.category}</p><h3 className="mt-2 text-lg font-black leading-tight text-[#16203A] group-hover:text-[#EC7354]">{article.title}</h3><p className="mt-2 text-sm font-bold text-[#16203A]">Read →</p></Link>)}</div></div></section>
+      <section className="border-y border-[#16203A]/10 bg-white py-8 lg:py-9"><div className="container grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-center"><div><Eyebrow>ABOUT NEXT MOVE LOANS</Eyebrow><h2 className="mt-2 text-[clamp(1.7rem,2.5vw,2.5rem)] font-black tracking-[-0.035em] text-[#16203A]">Broker-led. Team-supported. Built to last beyond one transaction.</h2></div><div><p className="leading-7 text-[#4C5566]">Next Move Loans is based in Leongatha and works with clients Australia-wide. Your broker leads the strategy, a support team helps keep the process moving, and the business is backed by Viking Aggregation.</p><div className="mt-4"><ArrowLink href="/about">About Us</ArrowLink></div></div></div></section>
+
+      <section className="bg-white py-8 lg:py-9" id="learn"><div className="container"><div className="flex items-end justify-between gap-4"><div><Eyebrow>LEARNING CENTRE</Eyebrow><h2 className="mt-2 text-2xl font-black text-[#16203A]">Useful answers for the decisions in front of you.</h2></div><ArrowLink href="/learn">View all</ArrowLink></div><div className="mt-5 grid gap-x-8 border-t border-[#16203A]/10 md:grid-cols-3">{learningArticles.slice(0,3).map(article=><Link className="group border-b border-[#16203A]/10 py-5 md:border-b-0" href={`/learn/${article.slug}`} key={article.slug}><p className="text-xs font-black uppercase tracking-[0.12em] text-[#EC7354]">{article.category}</p><h3 className="mt-2 text-lg font-black leading-tight text-[#16203A] group-hover:text-[#EC7354]">{article.title}</h3><p className="mt-2 text-sm font-bold text-[#16203A]">Read →</p></Link>)}</div></div></section>
 
       <section className="bg-[#16203A] py-9 text-white lg:py-10"><div className="container flex flex-wrap items-center justify-between gap-5"><div><Eyebrow light>READY TO TALK?</Eyebrow><h2 className="mt-1 text-[clamp(1.8rem,2.7vw,2.7rem)] font-black">What’s your next move?</h2><a className="mt-3 inline-flex items-center gap-2 text-xl font-black text-white" href={contactDetails.landlineHref}><Phone className="size-5 text-[#EC7354]"/>{contactDetails.landlineDisplay}</a></div><div className="flex flex-wrap gap-3"><Link className="button button-coral" href="/contact-us">Contact Us</Link><Link className="button button-outline-light" href="/book-a-call">Book a Call</Link></div></div></section>
     </main>
